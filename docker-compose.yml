@@ -1,19 +1,6 @@
 version: '3'
 
 services:
-  nginx:
-    build: 
-      context: ./nginx
-      dockerfile: Dockerfile
-    image: petrovick/nginx-challenge:prod
-    entrypoint: dockerize -wait tcp://app:3000 -timeout 20s docker-entrypoint.sh
-    container_name: nginx
-    networks:
-      - node-network
-    ports: 
-    - "8080:80"
-    depends_on:
-      - app
 
   app:
     command: bash -c "npm install && node index.js"
@@ -45,6 +32,19 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     networks:
       - node-network
+
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: petrovick/nginx-challenge:prod
+    container_name: nginx
+    networks:
+      - node-network
+    ports: 
+      - "8080:80"
+    # depends_on:
+    #   - app
 
 networks: 
   node-network:
