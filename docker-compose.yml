@@ -11,6 +11,8 @@ services:
       - node-network
     ports: 
     - "8080:80"
+    depends_on:
+      - app
 
   app:
     command: bash -c "npm install && node index.js"
